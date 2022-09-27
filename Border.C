@@ -26,6 +26,8 @@ unsigned long *Border::m_foregroundPixel;
 unsigned long *Border::m_backgroundPixel;
 unsigned long *Border::m_frameBackgroundPixel;
 unsigned long *Border::m_buttonBackgroundPixel;
+unsigned long *Border::m_hideBackgroundPixel;
+unsigned long *Border::m_destroyBackgroundPixel;
 unsigned long *Border::m_borderPixel;
 Pixmap Border::m_backgroundPixmap = None;
 
@@ -64,8 +66,8 @@ void BorderRectangleList::append(int x, int y, int w, int h)
 
 
 Border::Border(Client *const c, Window child) :
-    m_client(c), m_parent(0), m_tab(0),
-    m_child(child), m_button(0), m_resize(0), m_label(0),
+    m_client(c), m_parent(0), m_child(child),
+    m_button(0), m_tab(0), m_resize(0), m_label(0),
 #ifdef CONFIG_USE_XFT
     m_xftDraw(0),
 #endif
@@ -136,6 +138,10 @@ void Border::initialiseStatics(WindowManager *wm)
     m_frameBackgroundPixel = (unsigned long *) malloc(wm->screensTotal() * 
 						      sizeof(unsigned long));
     m_buttonBackgroundPixel = (unsigned long *) malloc(wm->screensTotal() * 
+						       sizeof(unsigned long));
+    m_hideBackgroundPixel = (unsigned long *) malloc(wm->screensTotal() * 
+						       sizeof(unsigned long));
+    m_destroyBackgroundPixel = (unsigned long *) malloc(wm->screensTotal() * 
 						       sizeof(unsigned long));
     m_borderPixel = (unsigned long *) malloc(wm->screensTotal() * 
 					     sizeof(unsigned long));
@@ -234,6 +240,10 @@ void Border::initialiseStatics(WindowManager *wm)
             (i, CONFIG_FRAME_BACKGROUND, "frame background");
 	m_buttonBackgroundPixel[i] = wm->allocateColour
             (i, CONFIG_BUTTON_BACKGROUND, "button background");
+	m_hideBackgroundPixel[i] = wm->allocateColour
+            (i, CONFIG_HIDE_BACKGROUND, "button background");
+	m_destroyBackgroundPixel[i] = wm->allocateColour
+            (i, CONFIG_DESTROY_BACKGROUND, "button background");
 	m_borderPixel[i] = wm->allocateColour
             (i, CONFIG_BORDERS, "border");
 
@@ -980,9 +990,8 @@ void Border::configure(int x, int y, int w, int h,
 	    (display(), root(), 1, 1, 1, 1, 0,
 	     m_borderPixel[screen()], m_frameBackgroundPixel[screen()]);
 
-        if(!m_client->isBorderless()) {
-	    m_tab = XCreateSimpleWindow
-	        (display(), m_parent, 1, 1, 1, 1, 0,
+    if(!m_client->isBorderless()) {
+	    m_tab = XCreateSimpleWindow(display(), m_parent, 1, 1, 1, 1, 0,
 	        m_borderPixel[screen()], m_backgroundPixel[screen()]);
 
 	    m_button = XCreateSimpleWindow

@@ -14,21 +14,21 @@ DynamicConfig DynamicConfig::config;
 
 struct DynamicConfigImpl
 {
-    char options[1000];	// Old options-string
-    char path[1000];	// Path to Options-Link
-    char focus; 	// 1 = Click , 2 = Raise, 4 = Autoraise
+    char options[1000];		// Old options-string
+    char path[1000];		// Path to Options-Link
+    char focus; 		// 1 = Click , 2 = Raise, 4 = Autoraise
     int  raisedelay;
-    char kbd;		// 1 = Keyboard on
-    char menu;		// 0 = no unmapped, 1 = everything
-    char feedback;	// 0 = no , 1 = yes
+    char kbd;			// 1 = Keyboard on
+    char menu;			// 0 = no unmapped, 1 = everything
+    char feedback;		// 0 = no , 1 = yes
     int  feeddelay;
-    char disable;	// 0 = New Window option, 1 = no New
-    char rightBt;	// 0 = disable, 1 = circulate, 2 = lower, 4 = height
-    char passfocusclick;// 0 = no, 1 = yes
+    char disable;		// 0 = New Window option, 1 = no New
+    char rightBt;		// 0 = disable, 1 = circulate, 2 = lower, 4 = height
+    char passfocusclick;	// 0 = no, 1 = yes
     char tabmargin;
-    char tabfg[COLOR_LEN];     // black
-    char tabbg[COLOR_LEN];     // gray80
-    char framebg[COLOR_LEN];   // gray95
+    char tabfg[COLOR_LEN];	// black
+    char tabbg[COLOR_LEN];	// gray80
+    char framebg[COLOR_LEN];	// gray95
 };  
 
 DynamicConfig::DynamicConfig() : m_impl(new DynamicConfigImpl)
@@ -57,18 +57,18 @@ DynamicConfig::DynamicConfig() : m_impl(new DynamicConfigImpl)
 	strcat(m_impl->path, "/options");
     }
 
-    m_impl->focus = 0;	// 1 = Click , 2 = Raise, 4 = Autoraise
+    m_impl->focus = 4;		// 1 = Click , 2 = Raise, 4 = Autoraise
     m_impl->raisedelay = 400;
-    m_impl->kbd = 1;		// 1 = Keyboard on
-    m_impl->menu = 1;	// 0 = no unmapped, 1 = everything
+    m_impl->kbd = 0;		// 0 = Keyboard off, 1 = Keyboard on
+    m_impl->menu = 0;		// 0 = no unmapped, 1 = everything
     m_impl->feedback = 1;	// 0 = no , 1 = yes
     m_impl->feeddelay = 300;
-    m_impl->disable = 0;        // 0 = allow New window, 1 = don't
+    m_impl->disable = 1;        // 0 = allow New window, 1 = don't
     m_impl->rightBt = 1;	// 0 = disable, 1 = circulate, 2 = lower
     m_impl->passfocusclick = 1;
     m_impl->tabmargin = 2;
     strcpy(m_impl->tabfg, "black");
-    strcpy(m_impl->tabbg, "gray80");
+    strcpy(m_impl->tabbg, "#8292B2"); // Steel blue: #8292B2
     strcpy(m_impl->framebg, "gray95");
 
     scan(1);

@@ -111,6 +111,8 @@ private:
     static unsigned long *m_backgroundPixel;
     static unsigned long *m_frameBackgroundPixel;
     static unsigned long *m_buttonBackgroundPixel;
+    static unsigned long *m_hideBackgroundPixel;
+    static unsigned long *m_destroyBackgroundPixel;
     static unsigned long *m_borderPixel;
     static Pixmap m_backgroundPixmap;
 

@@ -246,9 +246,9 @@ void WindowManager::eventKeyPress(XKeyEvent *ev)
 	if (key == CONFIG_QUICKHEIGHT_KEY && c) {
 
 	    if (c->isFullHeight()) {
-		c->unmaximise(Vertical);
+			c->unmaximise(Vertical);
 	    } else {
-		c->maximise(Vertical);
+			c->maximise(Vertical);
 	    }
 
 	} else
@@ -606,9 +606,9 @@ void Client::move(XButtonEvent *e)
     if(!isMovable())
         return;
         
-    if (m_windowManager->attemptGrab
-	(root(), None, DragMask, e->time) != GrabSuccess) {
-	return;
+    if (m_windowManager->attemptGrab(root(), None, DragMask, e->time) 
+        != GrabSuccess) {
+		return;
     }
 
     int mx = DisplayWidth (display(), windowManager()->screen()) - 1;
@@ -808,9 +808,9 @@ void Client::resize(XButtonEvent *e, Boolean horizontal, Boolean vertical)
     if (isFixedSize()) return;
     ShowGeometry geometry(m_windowManager, (XEvent *)e);
 
-    if (m_windowManager->attemptGrab
-	(root(), None, DragMask, e->time) != GrabSuccess) {
-	return;
+    if (m_windowManager->attemptGrab(root(), None, DragMask, e->time) 
+		!= GrabSuccess) {
+		return;
     }
 
     // the resize increments may have changed since the window was
@@ -1003,15 +1003,15 @@ void Border::eventButton(XButtonEvent *e)
     }
 
     if (e->window == m_resize) {
-	m_client->resize(e, True, True);
-	return;
+		m_client->resize(e, True, True);
+		return;
     }
 
     if (e->window != m_button || e->type == ButtonRelease) return;
 
-    if (windowManager()->attemptGrab(m_button, None, MenuGrabMask, e->time)
-	!= GrabSuccess) {
-	return;
+    if ( windowManager()->attemptGrab(m_button, None, MenuGrabMask, 
+									  e->time) != GrabSuccess) {
+		return;
     }
 
     XEvent event;
@@ -1024,15 +1024,21 @@ void Border::eventButton(XButtonEvent *e)
     int action = 1;
     int buttonSize = m_tabWidth[screen()] - TAB_TOP_HEIGHT*2 - 4;
 
-    XFillRectangle(display(), m_button, m_drawGC[screen()],
-		   0, 0, buttonSize, buttonSize);
+	XSetForeground(display(), m_drawGC[screen()],
+				   m_hideBackgroundPixel[screen()]);
+    XFillRectangle(display(), m_button, m_drawGC[screen()], 
+				   0, 0, buttonSize, buttonSize);
 
     while (!done) {
 
 	found = False;
 
 	if (tdiff > CONFIG_DESTROY_WINDOW_DELAY && action == 1) {
-	    windowManager()->installCursor(WindowManager::DeleteCursor);
+		XSetForeground(display(), m_drawGC[screen()],
+					   m_destroyBackgroundPixel[screen()]);
+		XFillRectangle(display(), m_button, m_drawGC[screen()], 
+					   0, 0, buttonSize, buttonSize);
+	    //windowManager()->installCursor(WindowManager::DeleteCursor);
 	    action = 2;
 	}
 
@@ -1066,11 +1072,15 @@ void Border::eventButton(XButtonEvent *e)
 	case ButtonRelease:
 
 	    if (!nobuttons(&event.xbutton)) {
-		action = 0;
+			XSetForeground(display(), m_drawGC[screen()],
+						   m_buttonBackgroundPixel[screen()]);
+			action = 0;
 	    }
 
 	    if (x < 0 || y < 0 || x >= buttonSize || y >= buttonSize) {
-		action = 0;
+			XSetForeground(display(), m_drawGC[screen()],
+						   m_buttonBackgroundPixel[screen()]);
+			action = 0;
 	    }
 
 	    windowManager()->releaseGrab(&event.xbutton);
@@ -1086,10 +1096,16 @@ void Border::eventButton(XButtonEvent *e)
 
 	    if (action == 0 || action == 2) {
 		if (x < 0 || y < 0 || x >= buttonSize || y >= buttonSize) {
-		    windowManager()->installCursor(WindowManager::NormalCursor);
+		    //windowManager()->installCursor(WindowManager::NormalCursor);
+			XSetForeground(display(), m_drawGC[screen()],
+						   m_buttonBackgroundPixel[screen()]);
 		    action = 0;
 		} else {
-		    windowManager()->installCursor(WindowManager::DeleteCursor);
+			XSetForeground(display(), m_drawGC[screen()],
+						   m_destroyBackgroundPixel[screen()]);
+			XFillRectangle(display(), m_button, m_drawGC[screen()], 
+						   0, 0, buttonSize, buttonSize);
+		    //windowManager()->installCursor(WindowManager::DeleteCursor);
 		    action = 2;
 		}
 	    }

@@ -1,4 +1,3 @@
-
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
@@ -79,7 +78,7 @@ private:
 
 // What to run to get a new window (from the "New" menu option)
 #define CONFIG_NEW_WINDOW_LABEL "New"
-#define CONFIG_NEW_WINDOW_COMMAND "x-terminal-emulator"
+#define CONFIG_NEW_WINDOW_COMMAND "xterm"
 #define CONFIG_NEW_WINDOW_COMMAND_OPTIONS 0
 // or, for example,
 //#define CONFIG_NEW_WINDOW_COMMAND_OPTIONS "-ls","-sb","-sl","1024",0
@@ -92,7 +91,7 @@ private:
  
 // Directory under $HOME in which to look for commands for the
 // middle-button menu
-#define CONFIG_COMMAND_MENU       ".wmx"
+#define CONFIG_COMMAND_MENU       ".config/wmx"
 // only used if COMMAND_MENU is not found; ignored if invalid directory:
 #define CONFIG_SYSTEM_COMMAND_MENU	"/usr/local/lib/wmx/menu"
 // append screennumber to COMMAND_MENU directory;
@@ -285,11 +284,11 @@ private:
 
 //!!! no proper way to handle italic/bold yet
 
-#define CONFIG_FRAME_FONT "Bitstream Vera Sans,Lucida Sans Unicode"
-#define CONFIG_FRAME_FONT_SIZE 12
+#define CONFIG_FRAME_FONT	"DejaVu Sans:style=Book,Noto Sans:style=Regular"
+#define CONFIG_FRAME_FONT_SIZE 24
 
-#define CONFIG_MENU_FONT "Bitstream Vera Sans,Lucida Sans Unicode"
-#define CONFIG_MENU_FONT_SIZE 12
+#define CONFIG_MENU_FONT	"DejaVu Sans:style=Book, Noto Sans:style=Regular"
+#define CONFIG_MENU_FONT_SIZE 24
 
 #else
 
@@ -298,9 +297,9 @@ private:
 // can't find one of the NICE ones.  These are font lists, rather than
 // single fonts
 
-#define CONFIG_NICE_FONT	  "-*-lucida-bold-r-*-*-14-*-75-75-*-*-*-*,-*-*-medium-r-*-*-14-*-75-75-*-*-*-*"
-#define CONFIG_NICE_MENU_FONT	  "-*-lucida-medium-r-*-*-14-*-75-75-*-*-*-*,-*-*-medium-r-*-*-14-*-75-75-*-*-*-*"
-#define CONFIG_NASTY_FONT	  "fixed,-*-*-*-*-*-*-14-*-75-75-*-*-*-*"
+#define CONFIG_NICE_FONT	"-*-lucida-bold-r-*-*-16-*-75-75-*-*-*-*,-*-*-medium-r-*-*-16-*-75-75-*-*-*-*"
+#define CONFIG_NICE_MENU_FONT	"-*-lucida-medium-r-*-*-16-*-75-75-*-*-*-*,-*-*-medium-r-*-*-16-*-75-75-*-*-*-*"
+#define CONFIG_NASTY_FONT	"fixed,-*-*-*-*-*-*-16-*-75-75-*-*-*-*"
 
 #endif
 
@@ -323,11 +322,13 @@ private:
 // for the whole decoration
 
 #define CONFIG_TAB_FOREGROUND     (DynamicConfig::config.tabForeground())
-#define CONFIG_TAB_BACKGROUND     (DynamicConfig::config.tabBackground())
+#define CONFIG_TAB_BACKGROUND     (DynamicConfig::config.tabBackground())// "#557799"
 #define CONFIG_FRAME_BACKGROUND   (DynamicConfig::config.frameBackground())
-#define CONFIG_BUTTON_BACKGROUND  (DynamicConfig::config.frameBackground())
+#define CONFIG_BUTTON_BACKGROUND  "#225500"  // green
+#define CONFIG_HIDE_BACKGROUND	  "#EE8800"  // orange
+#define CONFIG_DESTROY_BACKGROUND "#FF2211"  // red
 #define CONFIG_BORDERS            "black"
-#define CONFIG_CHANNEL_NUMBER	  "green"
+#define CONFIG_CHANNEL_NUMBER	  "red"
 #define CONFIG_CLOCK_NUMBER       "gray90"
 
 #define CONFIG_MENU_FOREGROUND    (DynamicConfig::config.tabForeground())
@@ -349,8 +350,8 @@ private:
 // will be too.  The latter screws up in palette-based visuals, but
 // should be okay in true-colour.
 
-#define CONFIG_USE_PIXMAPS        True
-#define CONFIG_USE_PIXMAP_MENUS   True
+#define CONFIG_USE_PIXMAPS        False
+#define CONFIG_USE_PIXMAP_MENUS   False
 
 // Set CHANNEL_SURF for multi-channel switching; CHANNEL_CLICK_SIZE is
 // how close you have to middle-button-click to the top-right corner
@@ -419,7 +420,7 @@ private:
 // command menu, and the middle mouse button (button2)
 // acts like the left mouse normally does (list of windows)
 
-#define CONFIG_GNOME_BUTTON_COMPLIANCE   False
+#define CONFIG_GNOME_BUTTON_COMPLIANCE   True
 
 #endif
 
